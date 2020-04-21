@@ -127,6 +127,11 @@ class LinkedList:
             previous_node = last_node
             last_node = last_node.next
 
+            
+        if next_node is last_node:
+
+            self.append(data)
+
 
 
 
@@ -139,6 +144,6 @@ linked_list.preprend("0")
 linked_list.insert_after_node(linked_list.head.next, 9)
 linked_list.insert_before_node(linked_list.head, "4")
 linked_list.insert_before_node(linked_list.head.next, "5")
-linked_list.insert_before_node(linked_list.head.next.next.next, "10")
+linked_list.insert_before_node(linked_list.head.next.next.next.next.next, "11")
 linked_list.print()
 
