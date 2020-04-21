@@ -1,4 +1,4 @@
-""" Creating a linked list and implenting print, append, prepend and insert_after_node methods with it """
+""" Creating a linked list and implenting print, append, prepend, insert_after_node and insert_before_node methods with it """
 
 class Node:
 
@@ -64,16 +64,81 @@ class LinkedList:
 
             return
 
+        """ 
+        This snipet of code checks if the given node is the last of the linked list and implements append method if true.
+        This code is not needed.
+
+        last_node = self.head
+
+        while last_node.next:
+            
+            last_node = last_node.next 
+
+        if previous_node is last_node:
+
+            self.append(data)
+
+            print('yes')
+
+            return 
+            
+        """
+
         new_node = Node(data)
 
         new_node.next = previous_node.next
 
         previous_node.next = new_node
-    
+
+
+    def insert_before_node(self, next_node, data):
+
+        """ Add the new node before the given node """
+
+        if not next_node:
+
+            print('Given not does not exist :(')
+
+            return
+
+        new_node = Node(data)
+
+        last_node = self.head
+
+        previous_node = None
+
+        while last_node.next:
+
+            if next_node is last_node:# Matching given node against all the nodes in the linked list one by one
+
+                if previous_node is None: #Check if given node is the head of the linked list
+
+                    self.preprend(data)
+
+                    return
+
+                else:
+
+                    previous_node.next = new_node
+                    new_node.next = last_node
+
+                    return
+
+            previous_node = last_node
+            last_node = last_node.next
+
+
+
+
+
+
 linked_list = LinkedList()
 linked_list.append("1")
 linked_list.append("2")
 linked_list.preprend("0")
 linked_list.insert_after_node(linked_list.head.next, 9)
+linked_list.insert_before_node(linked_list.head, "4")
+linked_list.insert_before_node(linked_list.head.next, "5")
+linked_list.insert_before_node(linked_list.head.next.next.next, "10")
 linked_list.print()
 
