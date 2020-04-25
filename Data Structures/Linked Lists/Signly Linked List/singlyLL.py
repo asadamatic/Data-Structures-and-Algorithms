@@ -1,5 +1,6 @@
 """ Creating a linked list and implenting print, append, prepend, insert_after_node, insert_before_node, delete, delete_head and delete_last methods with it """
 
+# last_node in this code does not mean last node of the linked list, it is just a reference to iterate on the linked list till the last node
 class Node:
 
     def __init__(self, data):
@@ -147,7 +148,43 @@ class LinkedList:
                 return
 
             last_node = last_node.next
+    
+    def delete_before_node(self, next_node):
 
+        last_node = self.head
+
+        if not next_node:
+
+            print('This node does not exist :(')
+
+            return
+
+        if next_node is last_node:
+
+            print('There is no node before this node :(')
+
+            return
+
+        previous_node = None
+
+        while last_node.next:
+
+            if next_node is last_node.next:
+
+                if previous_node is None:
+
+                    self.head = last_node.next
+
+                    return
+
+                else:
+
+                    previous_node.next = last_node.next
+
+                    return
+
+            previous_node = last_node
+            last_node = last_node.next
 
     def delete_head(self):
 
@@ -194,32 +231,238 @@ class LinkedList:
                     return
             
             previous_node = last_node
-            last_node = last_node.next     
+            last_node = last_node.next
+
+    def delete_node_with_data(self, data): #Assuming that all the nodes have uniqure data
+
+        """ Deleting the node containing that contains the given data """
+
+        last_node = self.head
+
+        node_check = None
+
+        previous_node = None
+        
+        while last_node:
+
+            if data is last_node.data:
+                
+                node_check = last_node
+
+                if previous_node is None:
+
+                    self.head = last_node.next
+
+                    return
+
+                else:
+
+                    previous_node.next = last_node.next
+
+                    return
+
+            previous_node = last_node
+            last_node = last_node.next
+
+        if node_check is None:
+
+            print('Node with the given data does not exist :(')
+
+            return
+
+
+
+    def length(self):
+
+        """ calculating the length of linked list by iterating on the list"""
+
+        last_node = self.head
+    
+        length = 0
+
+        while last_node:
+
+            length = length + 1    
+            
+            last_node = last_node.next 
+        
+        return length
+
+
+    def length_recursive(self, node):
+
+        """ Calculating the length of linked list using recurrsion """
+        
+        if node is None:
+
+            return 0
+
+        return 1 + self.length_recursive(node.next)
+
+    def swap_nodes_data(self, first_node, second_node):
+
+        """ Swaping data of the given nodes """ 
+
+        if not first_node and not second_node:
+
+            print('Either first or second node does not exist :(')
+
+            return
+
+
+        temporary_data = first_node.data
+        first_node.data  = second_node.data
+        second_node.data = temporary_data
+
+    def swap_nodes(self, first_node, second_node):
+
+        """ Swaping the given nodes """
+
+        if not first_node and second_node:
+
+            print('Either first or second node does not exist :(')
+
+            return
+
+
+        node_first = self.head
+        previous_first = None
+
+        while node_first.next:
+
+            if node_first.next is first_node:
+            
+                previous_first = node_first
+
+                break
+
+            node_first = node_first.next
+
+        node_second = self.head
+        previous_second = None
+
+        while node_second.next:
+
+            if node_second.next is second_node:
+
+                previous_second = node_second
+
+                break
+
+            node_second = node_second.next
+
+        temporary_next = second_node.next
+
+        if previous_first is None:
+            
+            self.head = second_node
+
+        else:
+
+            previous_first.next = second_node
+
+        if first_node.next is second_node:
+
+            second_node.next = first_node
+        
+        else:
+            
+            second_node.next = first_node.next
+
+        if previous_second is None:
+
+            self.head = first_node
+
+        else:
+
+            previous_second.next = first_node
+
+        if first_node.next is second_node:
+
+            first_node.next = second_node
+        
+        else:
+
+            first_node.next = temporary_next
+
+    def swap_nodes_with_data(self, first_data, second_data):
+
+        """ Swaping two nodes whose data is given """
+
+        last_node = self.head
+
+        first_node = None
+
+
+        while last_node.next:
+
+            if first_data is last_node.data:
+
+                first_node = last_node
+
+            last_node = last_node.next
+
+        
+        last_node = self.head
+
+        second_node = None
+
+        while last_node.next:
+
+            if second_data is last_node.data:
+
+                second_node = last_node
+
+            last_node = last_node.next
+
+        if first_node is None or second_node is None:
+
+            print('Node with the given data does not exist :(')
+
+            return
+
+        self.swap_nodes_data(first_node, second_node)
+
+    def reverse_list(self):
+
+        """ Reversing the linked list """
+
+        last_node = self.head
+
+        previous_node = None
+        older_node = None
+
+        while last_node:
+            
+            if previous_node is None:
+
+                pass
+                
+            else:
+                previous_node.next = older_node
+                older_node = previous_node   
+
+            
+            if not last_node.next:
+
+                last_node.next = older_node
+
+                break
+                
+            previous_node = last_node
+            last_node = last_node.next
+
+        self.head = last_node
+            
 
 linked_list = LinkedList()
 linked_list.append("1")
 linked_list.append("2")
 linked_list.preprend("0")
 linked_list.insert_after_node(linked_list.head.next, 9)
-linked_list.insert_before_node(linked_list.head, "4")
-linked_list.insert_before_node(linked_list.head.next, "5")
-linked_list.insert_before_node(linked_list.head.next.next.next.next.next, "11")
 linked_list.print()
-print('...')
-linked_list.delete_head()
-linked_list.print()
-print('...')
-linked_list.delete_last()
-linked_list.print()
-print('...')
-linked_list.delete(linked_list.head.next.next.next.next)
-linked_list.print()
-print('...')
-linked_list.insert_before_node(linked_list.head.next.next.next, "100")
-linked_list.print()
-print('...')
-linked_list.delete(linked_list.head.next.next.next.next)
-linked_list.print()
-print('...')
-linked_list.delete_after_node(linked_list.head.next.next.next)
+linked_list.delete_after_node(linked_list.head)
+print("______________________________________________________")
+
+linked_list.reverse_list()
 linked_list.print()
